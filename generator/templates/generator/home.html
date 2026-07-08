@@ -1,0 +1,114 @@
+{% extends 'generator/base.html' %}
+{% load static %}
+
+{% block title %}Bosh sahifa - AI Test Generator{% endblock %}
+
+{% block step_home %}active{% endblock %}
+
+{% block content %}
+<div class="premium-card" id="home-card">
+    <h1 style="font-size: 2.2rem; margin-bottom: 8px; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Professional AI Test Generator
+    </h1>
+    <p style="color: var(--color-text-secondary); margin-bottom: 32px; font-size: 1.1rem;">
+        Universitet o'qituvchilari uchun sun'iy intellekt yordamida fanlar bo'yicha professional testlar yaratish tizimi.
+    </p>
+
+    <!-- Error Display Banner -->
+    {% if error %}
+    <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid var(--color-error); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 24px; color: #fca5a5; display: flex; align-items: center; gap: 12px;" role="alert">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Generator Form -->
+    <form action="{% url 'generator:generate' %}" method="post" id="generator-form">
+        {% csrf_token %}
+        
+        <div class="grid-2">
+            <!-- Left Column -->
+            <div>
+                <!-- Subject selection -->
+                <div class="form-group">
+                    <label for="subject" class="form-label">Fan nomi / Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-input" 
+                           placeholder="Masalan: Ma'lumotlar tuzilmasi va algoritmlar" 
+                           value="{{ subject|default:'' }}" required>
+                </div>
+
+                <!-- Test Type selection -->
+                <div class="form-group">
+                    <label for="test_type" class="form-label">Test turi / Test Type</label>
+                    <select id="test_type" name="test_type" class="form-select">
+                        <option value="single">Bitta mavzu bo'yicha</option>
+                        <option value="multiple" selected>Bir nechta mavzular bo'yicha</option>
+                    </select>
+                </div>
+
+                <!-- Topics list -->
+                <div class="form-group">
+                    <label for="topics" class="form-label">Mavzu yoki mavzular (Vergul bilan ajrating) / Topics</label>
+                    <textarea id="topics" name="topics" class="form-textarea" 
+                              placeholder="Masalan: Stack, Queue, Binary Tree, Sorting Algorithms" 
+                              required>{{ topics|default:'' }}</textarea>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Number of Questions -->
+                <div class="form-group">
+                    <label for="questions_count" class="form-label">Testlar soni (1-100) / Questions Count</label>
+                    <input type="number" id="questions_count" name="questions_count" class="form-input" 
+                           min="1" max="100" value="{{ questions_count|default:'10' }}" required>
+                </div>
+
+                <!-- Difficulty Level -->
+                <div class="form-group">
+                    <label for="difficulty" class="form-label">Qiyinlik darajasi / Difficulty Level</label>
+                    <select id="difficulty" name="difficulty" class="form-select">
+                        <option value="easy" {% if difficulty == 'easy' %}selected{% endif %}>Oson (Easy)</option>
+                        <option value="medium" {% if difficulty == 'medium' or not difficulty %}selected{% endif %}>O'rta (Medium)</option>
+                        <option value="hard" {% if difficulty == 'hard' %}selected{% endif %}>Qiyin (Hard)</option>
+                    </select>
+                </div>
+
+                <!-- Test Language -->
+                <div class="form-group">
+                    <label for="language" class="form-label">Test tili / Language</label>
+                    <select id="language" name="language" class="form-select">
+                        <option value="uz" {% if language == 'uz' or not language %}selected{% endif %}>O'zbek tili</option>
+                        <option value="ru" {% if language == 'ru' %}selected{% endif %}>Rus tili</option>
+                        <option value="en" {% if language == 'en' %}selected{% endif %}>Ingliz tili</option>
+                    </select>
+                </div>
+
+                <!-- AI Model -->
+                <div class="form-group">
+                    <label for="ai_model" class="form-label">Sun'iy Intellekt Modeli / AI Model</label>
+                    <select id="ai_model" name="ai_model" class="form-select">
+                        <option value="gemma-4-31b" {% if ai_model == 'gemma-4-31b' or not ai_model %}selected{% endif %}>Gemma 4 31B (Cerebras Ultra-Tezkor)</option>
+                        <option value="zai-glm-4.7" {% if ai_model == 'zai-glm-4.7' %}selected{% endif %}>ZAI GLM 4.7 (Akademik tahlil)</option>
+                        <option value="gpt-oss-120b" {% if ai_model == 'gpt-oss-120b' %}selected{% endif %}>GPT OSS 120B (Katta va murakkab testlar)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div style="margin-top: 32px; display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn-primary" id="submit-btn">
+                <span>AI orqali yaratish</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

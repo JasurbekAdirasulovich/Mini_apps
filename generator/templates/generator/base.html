@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI Test Generator{% endblock %}</title>
+
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="Universitet o'qituvchilari uchun sun'iy intellekt yordamida professional test topshiriqlarini yaratish va eksport qilish tizimi.">
+    <meta name="author" content="AI Test Generator Team">
+
+    <!-- Core CSS Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="container header-container">
+            <a href="{% url 'generator:reset' %}" class="logo-wrapper" id="logo-link">
+                <div class="logo-icon">AI</div>
+                <div class="logo-text">AI Test Generator</div>
+            </a>
+
+            <!-- Process Stepper UI -->
+            <nav class="steps-nav" aria-label="Process Steps">
+                <div class="step-indicator {% block step_home %}{% endblock %}">
+                    <a href="{% url 'generator:home' %}"
+                        style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">1</div>
+                        <span>Yaratish</span>
+                    </a>
+                </div>
+
+                <div class="step-indicator {% block step_preview %}{% endblock %}" {% if not request.session.test_data %}style="opacity: 0.5; cursor: not-allowed;"{% endif %}>
+                    {% if request.session.test_data %}
+                    <a href="{% url 'generator:preview' %}"
+                        style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">2</div>
+                        <span>Ko'rib chiqish</span>
+                    </a>
+                    {% else %}
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">2</div>
+                        <span>Ko'rib chiqish</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="step-indicator {% block step_shuffle %}{% endblock %}" {% if not request.session.test_data %}style="opacity: 0.5; cursor: not-allowed;"{% endif %}>
+                    {% if request.session.test_data %}
+                    <a href="{% url 'generator:shuffle' %}"
+                        style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">3</div>
+                        <span>Variantlar</span>
+                    </a>
+                    {% else %}
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">3</div>
+                        <span>Variantlar</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="step-indicator {% block step_export %}{% endblock %}" {% if not request.session.variants %}style="opacity: 0.5; cursor: not-allowed;"{% endif %}>
+                    {% if request.session.variants %}
+                    <a href="{% url 'generator:export' %}"
+                        style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">4</div>
+                        <span>Yuklab olish</span>
+                    </a>
+                    {% else %}
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div class="step-number">4</div>
+                        <span>Yuklab olish</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content-area">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Loading Spinner Overlay -->
+    <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
+        <div class="spinner" role="status"></div>
+        <div class="loading-text" id="loading-overlay-text">AI testlar yaratmoqda, iltimos kuting...</div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="app-footer">
+        <div class="container">
+            <p>&copy; 2026 AI Test Generator. Universitet o'qituvchilari uchun professional loyiha.</p>
+            <p>
+                <a href="{% url 'generator:reset' %}">Bosh sahifa</a> |
+                <a href="https://github.com/JasurbekAdirasulovich/MINI_app.git" target="_blank"
+                    rel="noopener noreferrer">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Core Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+{% extends 'generator/base.html' %}
+{% load static %}
+
+{% block title %}Yuklab olish - AI Test Generator{% endblock %}
+
+{% block step_preview %}completed{% endblock %}
+{% block step_shuffle %}completed{% endblock %}
+{% block step_export %}active{% endblock %}
+
+{% block content %}
+<div class="premium-card">
+    <h1 style="font-size: 2rem; margin-bottom: 8px; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Tayyor testlarni yuklab olish
+    </h1>
+    <p style="color: var(--color-text-secondary); margin-bottom: 32px;">
+        Sizning testlaringiz va variantlaringiz muvaffaqiyatli tayyorlandi. O'zingizga ma'qul formatda yuklab oling.
+    </p>
+
+    <div class="grid-2" style="margin-bottom: 40px;">
+        <!-- Word DOCX Export card -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-surface-border); border-radius: var(--radius-md); padding: 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+            <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-primary);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+            </div>
+            <h2 style="font-size: 1.5rem; font-weight: 600;">Microsoft Word (DOCX)</h2>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+                Hujjatda har bir variant alohida sahifada boshlanadi va oxirida javoblar kaliti (Answer Key) taqdim etiladi.
+            </p>
+            <a href="{% url 'generator:export_docx' %}" class="btn-primary" style="width: 100%; margin-top: 12px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>DOCX Yuklab olish</span>
+            </a>
+        </div>
+
+        <!-- PDF Export card -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--color-surface-border); border-radius: var(--radius-md); padding: 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+            <div style="width: 60px; height: 60px; background: rgba(168, 85, 247, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-secondary);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                </svg>
+            </div>
+            <h2 style="font-size: 1.5rem; font-weight: 600;">Adobe PDF Format</h2>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+                Tayyor chop etish uchun mo'ljallangan format. Professional sarlavha va tartibli jadval ko'rinishidagi kalit bilan.
+            </p>
+            <a href="{% url 'generator:export_pdf' %}" class="btn-primary" style="width: 100%; margin-top: 12px; background: linear-gradient(135deg, var(--color-secondary) 0%, #ec4899 100%); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>PDF Yuklab olish</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display: flex; justify-content: flex-start;">
+        <a href="{% url 'generator:reset' %}" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7"/>
+                <path d="M19 12H5"/>
+            </svg>
+            <span>Bosh sahifaga qaytish</span>
+        </a>
+    </div>
+</div>
+{% endblock %}
