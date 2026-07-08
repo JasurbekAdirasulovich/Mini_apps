@@ -267,7 +267,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-input:focus, .form-select:focus, .form-textarea:focus {
     border-color: var(--color-primary);
     box-shadow: var(--shadow-glow);
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(114, 116, 114, 0.4);
 }
 
 .form-textarea {
