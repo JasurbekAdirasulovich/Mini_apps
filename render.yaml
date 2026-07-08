@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: ai-test-generator
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: CEREBRAS_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+    disk:
+      name: sessions-storage
+      mountPath: /opt/render/project/src/sessions
+      sizeGB: 1

@@ -25,7 +25,7 @@ def generate_view(request):
             
         difficulty = request.POST.get('difficulty', 'medium')
         language = request.POST.get('language', 'uz')
-        ai_model = request.POST.get('ai_model', 'gemini-1.5-flash')
+        ai_model = request.POST.get('ai_model', 'gemma-4-31b')
 
         # Simple validation
         if not subject or not topics:
